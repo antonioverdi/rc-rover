@@ -4,17 +4,23 @@
     <br>
 <p>
 <h1 align="center">
-<p> RovR </p>
+<p> Rovr </p>
 </h1>
 
 ## Table of Contents
 
-- [Phase 1](#phase-1)
-
-In the first phase, the goal will be to get the rover to be able to simply identify and track objects. 
-
-- [Phase 2](#phase-2)
-
-In phase 2, we want to implement code that allows the rover to navigate spaces and seek out predetermined objects. 
-
+- [Getting Started](#getting-started)
+- [Phase 1 - Basic Tracking](#phase-1)
+- [Phase 2 - Search and (Not) Destroy](#phase-2)
 - [Copyright and License](#copyright-and-license)
+
+## Getting Started
+### Hardware Requirements
+
+### Software Requirements
+
+## Phase 1 - Basic Tracking
+The goal of phase 1 is to setup Rovr such that it can identify and track predetermined objects. 
+
+## Phase 2 - Search and (Not) Destroy
+In phase 2, we want to implement code that allows Rovr to autonomously navigate spaces and seek out predetermined objects.
