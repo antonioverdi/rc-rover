@@ -9,5 +9,12 @@
 
 ## Table of Contents
 
-- [Quick Start](#quick-start)
+- [Phase 1](#phase-1)
+
+In the first phase, the goal will be to get the rover to be able to simply identify and track objects. 
+
+- [Phase 2](#phase-2)
+
+In phase 2, we want to implement code that allows the rover to navigate spaces and seek out predetermined objects. 
+
 - [Copyright and License](#copyright-and-license)
