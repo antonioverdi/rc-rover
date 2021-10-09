@@ -11,7 +11,7 @@
 
 - [Getting Started](#getting-started)
 - [Phase 1 - Basic Tracking](#phase-1)
-- [Phase 2 - Search and (Not) Destroy](#phase-2)
+- [Phase 2 - Search and (Don't) Destroy](#phase-2)
 - [Copyright and License](#copyright-and-license)
 
 ## Getting Started
