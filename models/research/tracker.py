@@ -6,6 +6,7 @@ import tarfile
 import tensorflow as tf
 import zipfile
 import pathlib
+import cv2
 from collections import defaultdict
 from io import StringIO
 from matplotlib import pyplot as plt
@@ -70,6 +71,7 @@ def run_inference_for_single_image(model, image):
      
   return output_dict
 
+
 def show_inference(model, frame):
   # Take the frame from webcam feed and convert that to array
   image_np = np.array(frame)
@@ -85,7 +87,7 @@ def show_inference(model, frame):
       instance_masks=output_dict.get('detection_masks_reframed', None),
       use_normalized_coordinates=True,
       line_thickness=5)
-
+ 
   return(image_np, output_dict)
 
 # Returns the normalized coordinates of the center point for the given bounding box in form (x_center, y_center)
@@ -102,15 +104,14 @@ def get_box_size(detection_box):
     area = x_length * y_length
     return area
 
-#Now we open the webcam and start detecting objects
-import cv2
-video_capture = cv2.VideoCapture(0)
-while True:
-    # Capture frame-by-frame
-    re,frame = video_capture.read()
-    Imagenp, output_dict = show_inference(detection_model, frame)
-    cv2.imshow('object detection', Imagenp)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-video_capture.release()
-cv2.destroyAllWindows()
+#Load image by Opencv2
+img = cv2.imread('models/research/cat.jpg') 
+
+Imagenp, output_dict = show_inference(detection_model, img)
+
+# detection box coords are in format: ymin, xmin, ymax, xmax 
+# top left corner is 0,0 and coordinates are normalized 
+
+cv2.imshow('object detection', Imagenp)
+cv2.waitKey(0)        
+cv2.destroyAllWindows() 
