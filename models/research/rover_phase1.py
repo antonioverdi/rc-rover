@@ -1,4 +1,5 @@
 import numpy as np
+import cv2
 import os
 import six.moves.urllib as urllib
 import sys
@@ -18,6 +19,11 @@ from object_detection.utils import visualization_utils as vis_util
 while "models" in pathlib.Path.cwd().parts:
     os.chdir('..')
  
+"""
+----------------------------------------------------------------------
+Loading and setting up model 
+----------------------------------------------------------------------
+"""
 def load_model(model_name):
   base_url = 'http://download.tensorflow.org/models/object_detection/'
   model_file = model_name + '.tar.gz'
@@ -36,6 +42,11 @@ category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABE
 model_name = 'ssd_inception_v2_coco_2017_11_17'
 detection_model = load_model(model_name)
  
+"""
+----------------------------------------------------------------------
+General functions
+----------------------------------------------------------------------
+"""
 def run_inference_for_single_image(model, image):
   image = np.asarray(image)
   # The input needs to be a tensor, convert it using `tf.convert_to_tensor`.
@@ -102,14 +113,17 @@ def get_box_size(detection_box):
     area = x_length * y_length
     return area
 
-#Now we open the webcam and start detecting objects
-import cv2
+"""
+----------------------------------------------------------------------
+Real-time object detection
+----------------------------------------------------------------------
+"""
 video_capture = cv2.VideoCapture(0)
 while True:
     # Capture frame-by-frame
-    re,frame = video_capture.read()
-    Imagenp, output_dict = show_inference(detection_model, frame)
-    cv2.imshow('object detection', Imagenp)
+    read, frame = video_capture.read()
+    image, output_dict = show_inference(detection_model, frame)
+    cv2.imshow('object detection', image)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 video_capture.release()
