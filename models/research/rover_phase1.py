@@ -119,6 +119,7 @@ Real-time object detection
 ----------------------------------------------------------------------
 """
 video_capture = cv2.VideoCapture(0)
+print("Initializing real-time object detection")
 while True:
     # Capture frame-by-frame
     read, frame = video_capture.read()
