@@ -28,12 +28,12 @@ def load_model(model_name):
   base_url = 'http://download.tensorflow.org/models/object_detection/'
   model_file = model_name + '.tar.gz'
   model_dir = tf.keras.utils.get_file(
-    fname=model_name, 
+    fname=model_name,
     origin=base_url + model_file,
     untar=True)
  
   model_dir = pathlib.Path(model_dir)/"saved_model"
-  model = tf.saved_model.load(str(model_dir))
+  model = tf.saved_model.load(str(model_dir), None)
   return model
  
 PATH_TO_LABELS = 'models/research/object_detection/data/mscoco_label_map.pbtxt'
