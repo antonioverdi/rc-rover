@@ -12,6 +12,7 @@
 - [Getting Started](#getting-started)
 - [Phase 1 - Basic Tracking](#phase-1)
 - [Phase 2 - Search and (Don't) Destroy](#phase-2)
+- [Resources](#resources)
 - [Copyright and License](#copyright-and-license)
 
 ## Getting Started
@@ -35,3 +36,26 @@ Now on to the actual setup:
     - Note that we also want to eventually have it so that the rover can determine if the object is not present in the space, but that would mean it would have to verify it has inspected the entire space
 - In order to do this, we will have the rover move around the space until the desired object is found within the frame. Once the object has been located, we can simply run the same code we wrote in phase 1 and have the rover actively follow the object.
     - We could also have the rover perform some operation or play a sound once the object has been located
+
+## Resources
+Here I will be listing the resources used when building the project, whether they be online tutorials, articles, or codebases from github.
+
+**General Object Detection with Tensorflow**
+
+- Used for initial setup and basic object detection
+
+[https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/](https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/)
+
+**Sunfounder PiCar-V Git Repo**
+
+- Used for general car utilities
+
+[https://github.com/sunfounder/SunFounder_PiCar-V](https://github.com/sunfounder/SunFounder_PiCar-V)
+
+**Tensorflow Models/Research Git Repo**
+
+- Used for implementing tensorflow detection models
+
+https://github.com/tensorflow/models
+
+
