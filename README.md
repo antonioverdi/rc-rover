@@ -40,22 +40,20 @@ Now on to the actual setup:
 ## Resources
 Here I will be listing the resources used when building the project, whether they be online tutorials, articles, or codebases from github.
 
-**General Object Detection with Tensorflow**
+**General Object Detection with Tensorflow** [https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/](https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/)
 
 - Used for initial setup and basic object detection
 
-[https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/](https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/)
 
-**Sunfounder PiCar-V Git Repo**
+
+**Sunfounder PiCar-V Git Repo** [https://github.com/sunfounder/SunFounder_PiCar-V](https://github.com/sunfounder/SunFounder_PiCar-V)
 
 - Used for general car utilities
 
-[https://github.com/sunfounder/SunFounder_PiCar-V](https://github.com/sunfounder/SunFounder_PiCar-V)
 
-**Tensorflow Models/Research Git Repo**
+**Tensorflow Models/Research Git Repo** https://github.com/tensorflow/models
 
 - Used for implementing tensorflow detection models
 
-https://github.com/tensorflow/models
 
 
