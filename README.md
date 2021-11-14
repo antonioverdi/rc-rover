@@ -6,12 +6,15 @@
 <h1 align="center">
 <p> Rovr </p>
 </h1>
+<h1 align="center">
+<p> An Object-Tracking Rover built with the Raspberry Pi 4</p>
+</h1>
 
 ## Table of Contents
 
 - [Getting Started](#getting-started)
-- [Phase 1 - Basic Tracking](#phase-1)
-- [Phase 2 - Search and (Don't) Destroy](#phase-2)
+- [Phase 1 - Basic Tracking](#phase-1---basic-tracking)
+- [Phase 2 - Object Search](#phase-2---object-search)
 - [Resources](#resources)
 - [Copyright and License](#copyright-and-license)
 
@@ -31,7 +34,7 @@ Now on to the actual setup:
 ### Phase 1.5
 - In phase 1.5, the overall goal is the same with the exception that we will add an ultrasonic sensor to the car to be able to better navigate the environment and avoid obstacles
 
-## Phase 2 - Search and (Don't) Destroy
+## Phase 2 - Object Search
 - In phase 2, we take everything implemented in phase 1 and apply it to a more slightly more difficult task. That is, we want to specify an object and instruct the rover to navigate the entire space until it has found the object
     - Note that we also want to eventually have it so that the rover can determine if the object is not present in the space, but that would mean it would have to verify it has inspected the entire space
 - In order to do this, we will have the rover move around the space until the desired object is found within the frame. Once the object has been located, we can simply run the same code we wrote in phase 1 and have the rover actively follow the object.
