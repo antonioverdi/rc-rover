@@ -7,6 +7,7 @@ import tarfile
 import tensorflow as tf
 import zipfile
 import pathlib
+import argparse
 from collections import defaultdict
 from io import StringIO
 from matplotlib import pyplot as plt
@@ -15,6 +16,10 @@ from IPython.display import display
 from object_detection.utils import ops as utils_ops
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
+
+parser = argparse.ArgumentParser(description='Object Tracking Rover')
+parser.add_argument("--model", help = "Name of the model to be used", default = 'ssd_inception_v2_coco_2017_11_17')
+args = parser.parse_args()
 
 while "models" in pathlib.Path.cwd().parts:
     os.chdir('..')
@@ -39,7 +44,7 @@ def load_model(model_name):
 PATH_TO_LABELS = 'models/research/object_detection/data/mscoco_label_map.pbtxt'
 category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
  
-model_name = 'ssd_inception_v2_coco_2017_11_17'
+model_name = args.model
 detection_model = load_model(model_name)
  
 """
