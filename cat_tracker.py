@@ -149,6 +149,7 @@ def find_cat(net):
                 detection_box = box.astype("int")
                 center = get_centerpoint[detection_box]
                 size = get_box_size(detection_box)
+                print(center, size)
     return center, size
 
 
