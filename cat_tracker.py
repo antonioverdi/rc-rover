@@ -44,9 +44,9 @@ time.sleep(2.0)
 
 # Setup Picar and arguments
 picar.setup()
-show_image_enable   = False
+show_image_enable   = True
 draw_circle_enable  = False
-scan_enable         = False
+scan_enable         = True
 rear_wheels_enable  = True
 front_wheels_enable = True
 pan_tilt_enable     = True
