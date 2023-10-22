@@ -144,7 +144,7 @@ def find_cat(net):
     for i in np.arange(0, predictions.shape[2]):
         confidence = predictions[0, 0, i, 2]
         if confidence > args["confidence"]:
-            if int(predictions[0, 0, i, 1]) == 5:
+            if int(predictions[0, 0, i, 1]) == 9:
                 box = predictions[0, 0, i, 3:7] * np.array([w, h, w, h])
                 detection_box = box.astype("int")
                 center = get_centerpoint(detection_box)
