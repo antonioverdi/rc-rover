@@ -61,8 +61,6 @@ kernel = np.ones((5,5),np.uint8)
 # Get screen size, centerpoint, etc
 SCREEN_WIDTH = 160
 SCREEN_HEIGHT = 120
-vs.set(3,SCREEN_WIDTH)
-vs.set(4,SCREEN_HEIGHT)
 CENTER_X = SCREEN_WIDTH/2
 CENTER_Y = SCREEN_HEIGHT/2
 OBJ_SIZE_MIN = 0.1
