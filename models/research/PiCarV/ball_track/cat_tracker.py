@@ -1,26 +1,49 @@
+from imutils.video import VideoStream
+from imutils.video import FPS
+import imutils
+import picar
 from picar import front_wheels, back_wheels
 from picar.SunFounder_PCA9685 import Servo
 import picar
-from time import sleep
+import argparse
+import time
 import cv2
 import numpy as np
-import picar
 import os
-from rover.models.research.phase1 import *
 
 """ 
 ---------------------------------------------------
 Initial Setup
 ---------------------------------------------------
 """
-PATH_TO_LABELS = 'models/research/object_detection/data/mscoco_label_map.pbtxt'
-category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
- 
-model_name = 'ssd_inception_v2_coco_2017_11_17'
-detection_model = load_model(model_name)
+# How to run?: python real_time_object_detection.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel
+# python real_time.py --prototxt MobileNetSSD_deploy.prototxt.txt --model MobileNetSSD_deploy.caffemodel
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--prototxt", required=True,
+	help="path to Caffe 'deploy' prototxt file")
+ap.add_argument("-m", "--model", required=True,
+	help="path to Caffe pre-trained model")
+ap.add_argument("-c", "--confidence", type=float, default=0.2,
+	help="minimum probability to filter weak predictions")
+args = vars(ap.parse_args())
 
+CLASSES = ["aeroplane", "background", "bicycle", "bird", "boat",
+           "bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
+           "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
+           "sofa", "train", "tvmonitor"]
+
+# The model from Caffe: MobileNetSSD_deploy.prototxt.txt; MobileNetSSD_deploy.caffemodel;
+print("[INFO] loading model...")
+net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
+
+print("[INFO] starting video stream...")
+vs = VideoStream(src=0).start()
+# warm up the camera for a couple of seconds
+time.sleep(2.0)
+
+# Setup Picar and arguments
 picar.setup()
-# Show image captured by camera, True to turn on, you will need #DISPLAY and it also slows the speed of tracking
 show_image_enable   = False
 draw_circle_enable  = False
 scan_enable         = False
@@ -34,19 +57,12 @@ if (show_image_enable or draw_circle_enable) and "DISPLAY" not in os.environ:
     draw_circle_enable  = False
 
 kernel = np.ones((5,5),np.uint8)
-img = cv2.VideoCapture(-1)
-
-# Open webcam
-if not img.isOpened:
-    print("not open")
-else:
-    print("open")
     
 # Get screen size, centerpoint, etc
 SCREEN_WIDTH = 160
 SCREEN_HEIGHT = 120
-img.set(3,SCREEN_WIDTH)
-img.set(4,SCREEN_HEIGHT)
+vs.set(3,SCREEN_WIDTH)
+vs.set(4,SCREEN_HEIGHT)
 CENTER_X = SCREEN_WIDTH/2
 CENTER_Y = SCREEN_HEIGHT/2
 OBJ_SIZE_MIN = 0.1
@@ -97,28 +113,44 @@ motor_speed = 60
 def nothing(x):
     pass
 
+def get_centerpoint(detection_box):
+    x_center = (detection_box[1] + detection_box[3]) / 2
+    y_center = (detection_box[0] + detection_box[2]) / 2
+    center = [x_center, y_center]
+    return center
+
+def get_box_size(detection_box):
+    x_length = detection_box[3] - detection_box[1]
+    y_length = detection_box[2] - detection_box[0]
+    area = x_length * y_length
+    return area
+
 # Reads frame and finds centerpoint and size if cat is found
-def find_cat():
+def find_cat(net):
     size = 0
     center = [0, 0]
     # Load webcam image
-    read, image = img.read()
-    if read == False:
-        print("Failed to read image")
+    frame = vs.read()
+    frame = imutils.resize(frame, width=400)
+    (h, w) = frame.shape[:2]
+	# Resize each frame
+    resized_image = cv2.resize(frame, (300, 300))
 
     # Run inference and find centerpoint/size if cat is detected
-    output_dict = run_inference_for_single_image(detection_model, image)
-    center = [0, 0]
-    size = 0
+    blob = cv2.dnn.blobFromImage(resized_image, (1/127.5), (300, 300), 127.5, swapRB=True)
 
-    if contains_cat(output_dict):
-        idx = find_index(17, output_dict)
-        det_box = output_dict['detection_boxes'][idx]
-        center = get_centerpoint(det_box)
-        size = get_box_size(det_box)
+    net.setInput(blob)
+	# Predictions:
+    predictions = net.forward()
 
-    cv2.waitKey(5) & 0xFF
-
+    for i in np.arange(0, predictions.shape[2]):
+        confidence = predictions[0, 0, i, 2]
+        if confidence > args["confidence"]:
+            if int(predictions[0, 0, i, 1]) == 7:
+                box = predictions[0, 0, i, 3:7] * np.array([w, h, w, h])
+                detection_box = box.astype("int")
+                center = get_centerpoint[detection_box]
+                size = get_box_size(detection_box)
     return center, size
 
 
@@ -167,7 +199,7 @@ def main():
                 if scan_count >= len(SCAN_POS):
                     scan_count = 0
             else:
-                sleep(0.1)
+                time.sleep(0.1)
 
         elif size < OBJ_SIZE_MAX:
             if follow_mode == 0:
@@ -217,7 +249,7 @@ def main():
             if pan_tilt_enable:
                 pan_servo.write(pan_angle)
                 tilt_servo.write(tilt_angle)
-            sleep(0.01)
+            time.sleep(0.01)
             fw_angle = 180 - pan_angle
             if fw_angle < FW_ANGLE_MIN or fw_angle > FW_ANGLE_MAX:
                 fw_angle = ((180 - fw_angle) - 90)/2 + 90
