@@ -176,7 +176,7 @@ def main():
         size = 0             # set initial obj size to 0
 
         for _ in range(10):
-            (tmp_x, tmp_y), tmp_size = find_cat()
+            (tmp_x, tmp_y), tmp_size = find_cat(net)
             if tmp_size > OBJ_SIZE_MIN:
                 x = tmp_x
                 y = tmp_y
@@ -269,7 +269,7 @@ def main():
 
 def destroy():
     bw.stop()
-    img.release()
+    vs.stop()
 
 def test():
     fw.turn(90)
