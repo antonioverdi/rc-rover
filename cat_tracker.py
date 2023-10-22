@@ -130,7 +130,6 @@ def find_cat(net):
     center = [0, 0]
     # Load webcam image
     frame = img.read()
-    frame = imutils.resize(frame, width=400)
 	# Resize each frame
     resized_image = cv2.resize(frame, (300, 300))
 
