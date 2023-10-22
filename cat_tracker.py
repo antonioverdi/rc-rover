@@ -147,7 +147,7 @@ def find_cat(net):
             #if int(predictions[0, 0, i, 1]) == 7:
             box = predictions[0, 0, i, 3:7] * np.array([w, h, w, h])
             detection_box = box.astype("int")
-            center = get_centerpoint[detection_box]
+            center = get_centerpoint(detection_box)
             size = get_box_size(detection_box)
             print(center, size)
     return center, size
