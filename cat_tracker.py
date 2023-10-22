@@ -38,7 +38,7 @@ print("[INFO] loading model...")
 net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
+img = cv2.VideoCapture(-1)
 # warm up the camera for a couple of seconds
 time.sleep(2.0)
 
@@ -121,6 +121,7 @@ def get_box_size(detection_box):
     x_length = detection_box[3] - detection_box[1]
     y_length = detection_box[2] - detection_box[0]
     area = x_length * y_length
+    size = area / 90000
     return area
 
 # Reads frame and finds centerpoint and size if cat is found
@@ -128,7 +129,7 @@ def find_cat(net):
     size = 0
     center = [0, 0]
     # Load webcam image
-    frame = vs.read()
+    frame = img.read()
     frame = imutils.resize(frame, width=400)
     (h, w) = frame.shape[:2]
 	# Resize each frame
@@ -144,12 +145,12 @@ def find_cat(net):
     for i in np.arange(0, predictions.shape[2]):
         confidence = predictions[0, 0, i, 2]
         if confidence > args["confidence"]:
-            #if int(predictions[0, 0, i, 1]) == 7:
-            box = predictions[0, 0, i, 3:7] * np.array([w, h, w, h])
-            detection_box = box.astype("int")
-            center = get_centerpoint(detection_box)
-            size = get_box_size(detection_box)
-            print(center, size)
+            if int(predictions[0, 0, i, 1]) == 7:
+                box = predictions[0, 0, i, 3:7] * np.array([w, h, w, h])
+                detection_box = box.astype("int")
+                center = get_centerpoint(detection_box)
+                size = get_box_size(detection_box)
+                print(center, size)
     return center, size
 
 
@@ -268,7 +269,7 @@ def main():
 
 def destroy():
     bw.stop()
-    vs.stop()
+    img.release()
 
 def test():
     fw.turn(90)
