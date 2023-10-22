@@ -122,7 +122,7 @@ def get_box_size(detection_box):
     y_length = detection_box[2] - detection_box[0]
     area = x_length * y_length
     size = area / 90000
-    return area
+    return size
 
 # Reads frame and finds centerpoint and size if cat is found
 def find_cat(net):
@@ -131,7 +131,6 @@ def find_cat(net):
     # Load webcam image
     frame = img.read()
     frame = imutils.resize(frame, width=400)
-    (h, w) = frame.shape[:2]
 	# Resize each frame
     resized_image = cv2.resize(frame, (300, 300))
 
