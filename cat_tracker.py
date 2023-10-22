@@ -181,7 +181,7 @@ def main():
                 size = tmp_size
                 break
         
-        print(x, y, s)
+        print(x, y, size)
 
         # Start scanning
         if size < OBJ_SIZE_MIN:
