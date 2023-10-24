@@ -4,10 +4,10 @@
     <br>
 <p>
 <h1 align="center">
-<p> Rovr </p>
+<p> RC-ROVER </p>
 </h1>
 <h1 align="center">
-<p> An Object-Tracking Rover built with the Raspberry Pi 4</p>
+<p> An Object-Tracking RC Car built with the Raspberry Pi 4</p>
 </h1>
 
 ## Table of Contents
@@ -19,42 +19,25 @@
 - [Copyright and License](#copyright-and-license)
 
 ## Getting Started
-- One thing to note before getting started is the fact that I will often be referring to the object as though it’s position is not static. Essentially what I mean is that i will be talking as though the object we want to track will be moving through space, because in my case the object I want to track is my cat (Insert cat photo here). Obviously the rover will have the ability to detect and move towards static objects as well, but in my eyes it’s more fun to have the rover track down something that is moving.
+At this point in time, the code is setup to run on the Sunfound PiCar-V using the control libraries they have written for the hardware in the car. If the code is to be run on different hardware, the cat_tracker.py file will need to be adjusted when it comes to the actual movement of the car. If 
 
-Now on to the actual setup: 
-- For the sake of simplicity, we can setup the Pi using the steps in the following GitHub repo
-- Once that has been done, we want to make sure that all the files we will need, including the labels.csv file and model for inference, are contained in a folder on the Pi
-- Again for the sake of simplicity, when it comes to the actual movement of the car, we will be relying on the code base provided by sunfounder
+### Running the Code
+Assuming you have a Sunfounder PiCar-V setup as directed in their manual, all you have to do is clone the github repo and run the cat_tracker.py file.
 
 ## Phase 1 - Basic Tracking
 - In phase 1, the goal will be to set up the car such that it can detect the desired object and move towards it using only the input from the webcam
 - To do this, we will run inference on the frames we receive as input from the webcam using OpenCV and calculate the location of the object relative to the car using the location of the bounding boxes on the screen
-- Once the location of the object has been determined, we can instruct the rover to move in the correct detection to follow the object (assuming it is moving)
+- Once the location of the object has been determined, we can instruct the rover to move in the correct detection to move towards the object until it reaches the distance threshold, at which point it will stop.
 
-### Phase 1.5
-- In phase 1.5, the overall goal is the same with the exception that we will add an ultrasonic sensor to the car to be able to better navigate the environment and avoid obstacles
-
-## Phase 2 - Object Search
-- In phase 2, we take everything implemented in phase 1 and apply it to a more slightly more difficult task. That is, we want to specify an object and instruct the rover to navigate the entire space until it has found the object
-    - Note that we also want to eventually have it so that the rover can determine if the object is not present in the space, but that would mean it would have to verify it has inspected the entire space
-- In order to do this, we will have the rover move around the space until the desired object is found within the frame. Once the object has been located, we can simply run the same code we wrote in phase 1 and have the rover actively follow the object.
-    - We could also have the rover perform some operation or play a sound once the object has been located
+### Phase 2
+Th next phase is still a work in progress. As of right now, the car just sits in a static location and scans in front of it until it detects a cat. Moving forward, the goal will be to implement a SLAM algorithm so that the car can patrol the house while scanning for objects
 
 ## Resources
 Here I will be listing the resources used when building the project, whether they be online tutorials, articles, or codebases from github.
 
-**General Object Detection with Tensorflow** [https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/](https://www.mygreatlearning.com/blog/object-detection-using-tensorflow/)
-
-- Used for initial setup and basic object detection
-
-
-
 **Sunfounder PiCar-V Git Repo** [https://github.com/sunfounder/SunFounder_PiCar-V](https://github.com/sunfounder/SunFounder_PiCar-V)
 
 - Used for general car utilities
-
-
-**Tensorflow Models/Research Git Repo** https://github.com/tensorflow/models
 
 - Used for implementing tensorflow detection models
 
