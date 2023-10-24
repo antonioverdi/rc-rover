@@ -74,7 +74,7 @@ Camera scanning and general car setup
 """
 
 # 0 = step by step(slow, stable), 1 = calculate the step(fast, unstable)
-follow_mode = 1
+follow_mode = 0
 
 CAMERA_STEP = 2
 CAMERA_X_ANGLE = 20
@@ -106,7 +106,7 @@ fw.turn(90)
 pan_servo.write(90)
 tilt_servo.write(90)
 
-motor_speed = 60
+motor_speed = 30
 
 def nothing(x):
     pass
