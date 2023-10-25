@@ -1,14 +1,15 @@
-<p align="center">
-    <br>
-    <img src="https://github.com/antonioverdi/Text-Generation-GUI/blob/master/docs/imgs/happy-robot.png" width="200"/>
-    <br>
-<p>
+
 <h1 align="center">
 <p> RC-ROVER </p>
-</h1>
-<h1 align="center">
 <p> An Object-Tracking RC Car built with the Raspberry Pi 4</p>
 </h1>
+
+<p align="center">
+    <br>
+    <img src=images/rover.jpg width="750"/>
+    <br>
+<p>
+
 
 ## Table of Contents
 
